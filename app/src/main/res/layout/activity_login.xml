@@ -8,7 +8,7 @@
 
     <EditText
         android:hint="Digite seu email"
-        android:id="@+id/editText"
+        android:id="@+id/edit_email"
         android:layout_width="334dp"
         android:layout_height="48dp"
         android:layout_marginStart="60dp"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/edit_senha"
         android:layout_width="332dp"
         android:layout_height="47dp"
         android:layout_marginStart="60dp"
@@ -29,7 +29,7 @@
         android:ems="10"
         android:inputType="textPassword"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_email" />
 
     <Button
         android:id="@+id/btn_login"
@@ -40,5 +40,18 @@
         android:layout_marginTop="60dp"
         android:text="Login"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_senha" />
+
+    <Button
+        android:id="@+id/btn_novo"
+        android:layout_width="328dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginLeft="64dp"
+        android:layout_marginTop="56dp"
+        android:text="Novo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+
+
 </android.support.constraint.ConstraintLayout>
