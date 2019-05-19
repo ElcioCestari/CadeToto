@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CadastrarPetActivity"
+    android:orientation="vertical">
+
+    <EditText
+        android:hint="Nome do bichinho"
+        android:id="@+id/edit_pet_nome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!--TODO: O Pet esta somente com o nome, deve ser implementados outros atributos tanto no layout como nas classes -->
+
+    <Button
+        android:text="SALVAR"
+        android:id="@+id/btn_pet_salvar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

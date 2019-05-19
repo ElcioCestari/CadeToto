@@ -15,6 +15,11 @@ public class User {
     private String email;
     private String senha;//campo com implementação pobre, pois o objetivo desse app é para por em pratica outros conhecimentos
 
+    /**
+     * Construtor padrão que é utilizado pelo firebase
+     */
+    public User(){}
+
     public User(String idUser, String name, String email, String senha) {
         this.idUser = idUser;
         this.name = name;

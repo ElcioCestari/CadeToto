@@ -1,5 +1,6 @@
 package com.elcio.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,6 +12,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.elcio.myapplication.model.Pet;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -22,7 +25,6 @@ public class PetListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pet_list);
-
 
         petList = new ArrayList<>();
         petList.add(new Pet("1", "toto", "1")); //apenas para teste
@@ -45,11 +47,16 @@ public class PetListActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        /*
+        * Quando o usuário deseja cadastrar um novo pet ele deve clicar nessa view.
+        * Ela ira chamar uma activity que faz esse processamento
+        */
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplication(), "ta funcionando", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getApplication(), CadastrarPetActivity.class);
+                startActivity(intent);
             }
         });
     }

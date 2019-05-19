@@ -14,6 +14,13 @@ public class Pet {
     private String idDono; // String que serve como chave strangeira para idUser (dono do pet)
     //todo: implementar a foto que irá aparecer no app
 
+
+    /**
+     * Construtor padrão que é utilizado pelo firebase
+     */
+    public Pet() {
+    }
+
     /**
      * Constrrutor da classe
      * @param idPet - identificar unico que será salvo no banco
