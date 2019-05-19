@@ -9,17 +9,27 @@ package com.elcio.myapplication.model;
  * de seu id</p>
  */
 public class Pet {
-    private String idPet;
-    private String name;
-    private String idDono;
+    private String idPet; // String que sera utilizada como identificador do pet
+    private String name; // String que representa o nome do pet
+    private String idDono; // String que serve como chave strangeira para idUser (dono do pet)
     //todo: implementar a foto que irá aparecer no app
 
+    /**
+     * Constrrutor da classe
+     * @param idPet - identificar unico que será salvo no banco
+     * @param name - nome do pet
+     * @param idDono - chave strangeira para idUser
+     */
     public Pet(String idPet, String name, String idDono) {
         this.idPet = idPet;
         this.name = name;
         this.idDono = idDono;
     }
 
+    /**
+     *
+     * @return - String contendo o nome do animal
+     */
     @Override
     public String toString() {
         return this.getName();

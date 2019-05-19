@@ -73,6 +73,8 @@ public class LoginActivity extends AppCompatActivity {
                 //TODO: ao entrar nesse if o usário estara logado, portando devo implementar o que fazer apos o login
                 if (task.isSuccessful()) {
                     myToast("Usuário Logado");
+                    Intent intent = new Intent(getApplication(), PetListActivity.class);
+                    startActivity(intent);
                 } else {
                     myToast("Nao foi possível realizar o login!");
                 }

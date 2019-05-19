@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CadastroActivity"></activity>
+        <activity
+            android:name=".PetListActivity"
+            android:label="@string/title_activity_teste"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".CadastroActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".PetListActivity"
+    tools:showIn="@layout/activity_pet_list">
+
+    <ListView
+        android:id="@+id/listView_pet_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
+    </ListView>
+
+</android.support.constraint.ConstraintLayout>
+<!--Esse layout é utilizado em activity_pet_list.xml é nele aonde é colocado o conteudo do centro da tela -->

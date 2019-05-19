@@ -13,6 +13,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * <h1>CadastroActivity</h1>
+ *
+ * <p>Activity utilizada para fazer a criação de um usuário</p>
+ *
+ * TODO: não ha uma implementaão robusta até o presente mommento para a "senha"
+ * @author Elcio
+ * @version 0.1
+ */
 public class CadastroActivity extends AppCompatActivity {
 
     private EditText editEmail, editSenha, editNome;
@@ -25,6 +34,10 @@ public class CadastroActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cadastro);
         initComponents();
 
+        /**
+         * Tratamento de evento quando o usuário clica em salvar
+         * TODO: ate o presente mommento não foram implementadas funcionalidades para tratativa do tipo: usuário naõ digita a senha.=, entre outras
+         */
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -37,6 +50,12 @@ public class CadastroActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Cria um usuário no firebase com os seguintes parametros:
+     * @param email - uma String contendo um padrão de email valido
+     * @param senha - uma String contendo uma senha
+     * @param nome
+     */
     private void createUser(String email, String senha, String nome) {
         firebaseAuth.createUserWithEmailAndPassword(email, senha).
                 addOnCompleteListener(CadastroActivity.this, new OnCompleteListener<AuthResult>() {
@@ -52,10 +71,18 @@ public class CadastroActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * Exibe uma Toast na tela com uma mensagem que é recebida como parametro
+     * @param msg - uma String que deve ser exibida para o usuário
+     */
     private void alert(String msg){
         Toast.makeText(CadastroActivity.this, msg, Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * Inicializa os componentes visuaís da activity,
+     * atribuindo-os aos seus resbectivos View
+     */
     private void initComponents() {
         this.editEmail = findViewById(R.id.edit_novo_email);
         this.editNome = findViewById(R.id.edit_novo_nome);

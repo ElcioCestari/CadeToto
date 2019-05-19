@@ -6,6 +6,14 @@ import android.support.annotation.NonNull;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+/**
+ * <h1>Conection</h1>
+ *
+ * <p>Classe responsável por fazer as conexões com o firebase</p>
+ *
+ * @author Elcio
+ * @version 0.1
+ */
 public class Conection {
     private static FirebaseAuth firebaseAuth;
     private static FirebaseAuth.AuthStateListener authStateListener;
@@ -36,6 +44,9 @@ public class Conection {
         return firebaseUser;
     }
 
+    /**
+     * Faz o logout do firebase
+     */
     public static void logOut(){
         firebaseAuth.signOut();
     }

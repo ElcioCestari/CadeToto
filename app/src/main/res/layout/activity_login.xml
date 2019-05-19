@@ -50,6 +50,7 @@
         android:layout_marginLeft="64dp"
         android:layout_marginTop="56dp"
         android:text="Novo"
+        android:hint="Digite sua senha"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
