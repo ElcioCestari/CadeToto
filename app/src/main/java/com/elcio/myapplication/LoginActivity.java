@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.elcio.myapplication.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -20,6 +21,7 @@ public class LoginActivity extends AppCompatActivity {
     Button btnLogin, btnNovo;
 
     private FirebaseAuth firebaseAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,14 +68,16 @@ public class LoginActivity extends AppCompatActivity {
      * @param email - uma String contendo um email
      * @param senha - uma string contendo a senha
      */
-    private void login(String email, String senha) {
+    private void login(final String email, final String senha) {
         firebaseAuth.signInWithEmailAndPassword(email, senha).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 //TODO: ao entrar nesse if o usário estara logado, portando devo implementar o que fazer apos o login
                 if (task.isSuccessful()) {
                     myToast("Usuário Logado");
+
                     Intent intent = new Intent(getApplication(), PetListActivity.class);
+
                     startActivity(intent);
                 } else {
                     myToast("Nao foi possível realizar o login!");
