@@ -1,5 +1,6 @@
 package com.elcio.myapplication;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.elcio.myapplication.model.Pet;
 import com.elcio.myapplication.model.User;
@@ -30,35 +32,24 @@ import java.util.UUID;
  */
 public class CadastrarPetActivity extends AppCompatActivity {
 
-    Button btnSalvar;
+    Button btnSalvar; //button usado para salvar as alterações de um pet
+    TextView tViewPetNome; //TextView usado para ler o nome do pet
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_pet);
 
+        /*Fazendo referencia das views*/
+        tViewPetNome = findViewById(R.id.edit_pet_nome);
         btnSalvar = findViewById(R.id.btn_pet_salvar);
+
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                // Write a message to the database
                 final FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference myRef = database.getReference("Pessoa");
-/*
-        String email = "elciotaira@email.com";
-        String id = UUID.randomUUID().toString();
-        String name = "Elcio";
-        String senha = "123456";
-
-        User usuario = new User();
-        usuario.setEmail(email);
-        usuario.setIdUser(id);
-        usuario.setName(name);
-        usuario.setSenha(senha);
-
-        myRef.child(id).setValue(usuario);
-*/
 
                 myRef.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -70,15 +61,21 @@ public class CadastrarPetActivity extends AppCompatActivity {
                             list.add(dono);
                         }
 
-                        DatabaseReference refPet = database.getReference("animal");
-                        String name = "toto";
-                        Pet pet = new Pet(UUID.randomUUID().toString(),name,dono.getIdUser().toString());
-                        refPet.child(pet.getIdPet()).setValue(pet);
+                        DatabaseReference refPet = database.getReference("animal");/*referencia ao nó 'animal'*/
 
+                        String name = tViewPetNome.getText().toString();//recuperando a entrada do usuário
 
+                        /*Criando  o objeto pet que será salvo no banco*/
+                        Pet pet = new Pet(UUID.randomUUID().toString(), name, dono.getIdUser().toString());
+
+                        refPet.child(pet.getIdPet()).setValue(pet);//salvando um pet no firebase
 
                         //String value = dataSnapshot.getKey().toString();
                         Log.d("FIREBASE", "\n\n\n Value is: " + list.get(0).toString() + "\n\n");
+
+                        /*Após salvar os salvar os dados chamma uma nova activity*/
+                        Intent intent = new Intent(getApplicationContext(), PetListActivity.class);
+                        startActivity(intent);
                     }
 
                     @Override

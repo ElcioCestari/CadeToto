@@ -33,6 +33,7 @@ public class PetListActivity extends AppCompatActivity {
 
         petList = new ArrayList<>();
 
+        /*acessa o firebase e le todos os animais e exibe em uma lista*/
         getPetsFromFirebase();
 
 
@@ -62,9 +63,16 @@ public class PetListActivity extends AppCompatActivity {
         DatabaseReference reference = firebaseDatabase.getReference("animal");
 
         reference.addValueEventListener(new ValueEventListener() {
+
+            /**
+             * O processamento é realizado aqui para ler e exibir um pét
+             * @param dataSnapshot - o retorno do firebase da consulta
+             */
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Pet pet;
+                Pet pet;// pet temporario
+
+                /*Faz a leitura dos pet e atribui eles na lista*/
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     pet = snapshot.getValue(Pet.class);
                     petList.add(pet);
