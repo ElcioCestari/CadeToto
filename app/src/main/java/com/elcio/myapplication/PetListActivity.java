@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,6 +30,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class PetListActivity extends AppCompatActivity {
+    private static final int[] imageTeste = {R.drawable.img_tela_inicial, R.drawable.img_tela_inicial, R.drawable.img_tela_inicial};
+    private static final String[] tituloTeste = {"titulo","titulo","titulo"};
+    private static final String[] descricaoTeste = {"Alguma descrição aqui","Alguma descrição aqui","Alguma descrição aqui"};
 
     private ArrayList<Pet> petList;
     private String[] stringPetList;
@@ -87,6 +91,7 @@ public class PetListActivity extends AppCompatActivity {
                     Log.d("LISTA DE ANIMAIS", "PETS: " + petList.get(0));
                 }
 
+
                 /*converte stringPetList ArrayList<Pet> em String[]*/
                 stringPetList = new String[petList.size()];
                 for (int i = 0; i < petList.size(); i++) {
@@ -95,10 +100,13 @@ public class PetListActivity extends AppCompatActivity {
 
                 }
 
+
+                MyAdapter myAdapter = new MyAdapter(getApplicationContext(),imageTeste,tituloTeste, descricaoTeste);
+
                 /*Cria uma simples listview para ser exibida*/
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, stringPetList);
                 ListView listView = findViewById(R.id.listView_pet_list);
-                listView.setAdapter(adapter);
+                listView.setAdapter(myAdapter);
             }
 
             @Override
@@ -110,22 +118,38 @@ public class PetListActivity extends AppCompatActivity {
     }
 }
 //TODO DEVO IMPLEMENTAR ISSO EPOIS
-class MyAdapter extends ArrayAdapter {
+class MyAdapter extends BaseAdapter {
 
     int[] image;
     String[] titulo;
     String[] descricao;
+    Context context;
 
     public MyAdapter(Context context, int[] image, String[] titulo, String[] descricao) {
-        super(context, R.layout.customlistview);
         this.titulo = titulo;
         this.image = image;
         this.descricao = descricao;
+        this.context = context;
+    }
+
+    @Override
+    public int getCount() {
+        return titulo.length;
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return null;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return 0;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View row = inflater.inflate(R.layout.customlistview, parent, false);
 
         ImageView img = row.findViewById(R.id.img_foto_pet_list);
