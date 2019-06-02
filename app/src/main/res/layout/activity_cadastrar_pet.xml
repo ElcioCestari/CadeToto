@@ -1,23 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CadastrarPetActivity"
-    android:orientation="vertical">
+    tools:context=".CadastrarPetActivity">
+
+    <ImageView
+        android:id="@+id/imgView_foto_pet"
+        android:layout_width="411dp"
+        android:layout_height="192dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="68dp"
+        android:src="@drawable/img_tela_inicial"
+        app:layout_constraintBottom_toTopOf="@+id/edit_pet_nome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:hint="Nome do bichinho"
         android:id="@+id/edit_pet_nome"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="48dp"
+        android:hint="Nome do bichinho"
+        app:layout_constraintBottom_toTopOf="@+id/btn_foto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgView_foto_pet" />
 
     <!--TODO: O Pet esta somente com o nome, deve ser implementados outros atributos tanto no layout como nas classes -->
 
     <Button
-        android:text="SALVAR"
         android:id="@+id/btn_pet_salvar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="82dp"
+        android:text="SALVAR"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_foto" />
+
+    <Button
+        android:id="@+id/btn_foto"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="32dp"
+        android:text="Foto"
+        app:layout_constraintBottom_toTopOf="@+id/btn_pet_salvar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_pet_nome" />
+</android.support.constraint.ConstraintLayout>

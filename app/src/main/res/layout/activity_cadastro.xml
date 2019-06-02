@@ -40,6 +40,7 @@
         app:layout_constraintTop_toBottomOf="@+id/edit_novo_email" />
 
     <Button
+        android:text="salvar"
         android:id="@+id/btn_novo_salvar"
         android:layout_width="375dp"
         android:layout_height="55dp"

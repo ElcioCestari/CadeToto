@@ -7,52 +7,78 @@
     tools:context=".LoginActivity">
 
     <EditText
-        android:hint="Digite seu email"
         android:id="@+id/edit_email"
-        android:layout_width="334dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginTop="136dp"
+        android:layout_width="320dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginRight="44dp"
+        android:layout_marginBottom="36dp"
         android:ems="10"
+        android:hint="Digite seu email"
         android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toTopOf="@+id/edit_senha"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/img_tela_inicial" />
 
     <EditText
         android:id="@+id/edit_senha"
-        android:layout_width="332dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginTop="60dp"
+        android:layout_width="320dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="43dp"
+        android:layout_marginLeft="43dp"
+        android:layout_marginEnd="43dp"
+        android:layout_marginRight="43dp"
+        android:layout_marginBottom="26dp"
         android:ems="10"
+        android:hint="Digite sua senha"
         android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/btn_novo"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_email" />
 
     <Button
         android:id="@+id/btn_login"
-        android:layout_width="332dp"
+        android:layout_width="100dp"
         android:layout_height="60dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginRight="100dp"
         android:text="Login"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_novo"
+        app:layout_constraintEnd_toStartOf="@+id/btn_novo"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_senha" />
+        app:layout_constraintTop_toTopOf="@+id/btn_novo" />
 
     <Button
         android:id="@+id/btn_novo"
-        android:layout_width="328dp"
-        android:layout_height="75dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginLeft="64dp"
-        android:layout_marginTop="56dp"
-        android:text="Novo"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="47dp"
+        android:layout_marginRight="47dp"
+        android:layout_marginBottom="99dp"
         android:hint="Digite sua senha"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+        android:text="Novo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_login"
+        app:layout_constraintTop_toBottomOf="@+id/edit_senha" />
+
+    <ImageView
+        android:id="@+id/img_tela_inicial"
+        android:layout_width="320dp"
+        android:layout_height="320dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginBottom="6dp"
+        android:src="@drawable/img_tela_inicial"
+        app:layout_constraintBottom_toTopOf="@+id/edit_email"
+        app:layout_constraintEnd_toEndOf="@+id/edit_email"
+        app:layout_constraintStart_toStartOf="@+id/edit_email"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>

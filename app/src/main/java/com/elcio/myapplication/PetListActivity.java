@@ -1,5 +1,6 @@
 package com.elcio.myapplication;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -7,12 +8,18 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.elcio.myapplication.model.Pet;
 import com.elcio.myapplication.model.User;
+import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -47,7 +54,8 @@ public class PetListActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplication(), CadastrarPetActivity.class);
+
+                Intent intent = new Intent(getApplicationContext(), CadastrarPetActivity.class);
                 startActivity(intent);
             }
         });
@@ -100,5 +108,34 @@ public class PetListActivity extends AppCompatActivity {
         });
 
     }
+}
+//TODO DEVO IMPLEMENTAR ISSO EPOIS
+class MyAdapter extends ArrayAdapter {
 
+    int[] image;
+    String[] titulo;
+    String[] descricao;
+
+    public MyAdapter(Context context, int[] image, String[] titulo, String[] descricao) {
+        super(context, R.layout.customlistview);
+        this.titulo = titulo;
+        this.image = image;
+        this.descricao = descricao;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View row = inflater.inflate(R.layout.customlistview, parent, false);
+
+        ImageView img = row.findViewById(R.id.img_foto_pet_list);
+        TextView textName = row.findViewById(R.id.text_nome_pet_list);
+        TextView textDetalhe = row.findViewById(R.id.text_detalhes_pet_list);
+
+        img.setImageResource(image[position]);
+        textName.setText(titulo[position]);
+        textDetalhe.setText(descricao[position]);
+        return row;
+
+    }
 }
