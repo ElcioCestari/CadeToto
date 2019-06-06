@@ -13,7 +13,8 @@ public class Pet {
     private String name; // String que representa o nome do pet
     private String idDono; // String que serve como chave strangeira para idUser (dono do pet)
     private String descricao; //String que será utilizada para dizer algumas informações sobre o pet
-    //todo: implementar a foto que irá aparecer no app
+    private String idFoto;//Integer que contem a id da foto
+    //todo: atualmente esta sendo salvo somente uma foto cujo id É O MESMO do idPet, veja o construtor
 
 
     /**
@@ -47,6 +48,22 @@ public class Pet {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public Pet(String idPet, String name, String idDono, String descricao, String idFoto) {
+        this.idPet = idPet;
+        this.name = name;
+        this.idDono = idDono;
+        this.descricao = descricao;
+        this.idFoto = idFoto;
+    }
+
+    public String getIdFoto() {
+        return idFoto;
+    }
+
+    public void setIdFoto(String idFoto) {
+        this.idFoto = idFoto;
     }
 
     /**

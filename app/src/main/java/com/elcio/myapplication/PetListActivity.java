@@ -2,6 +2,9 @@ package com.elcio.myapplication;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -18,22 +21,20 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.elcio.myapplication.model.Pet;
-import com.elcio.myapplication.model.User;
-import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
 public class PetListActivity extends AppCompatActivity {
-    private static final int[] imageTeste = {R.drawable.img_tela_inicial, R.drawable.img_tela_inicial, R.drawable.img_tela_inicial};
-    private static final String[] tituloTeste = {"titulo","titulo","titulo"};
-    private static final String[] descricaoTeste = {"Alguma descrição aqui","Alguma descrição aqui","Alguma descrição aqui"};
-
     private ArrayList<Pet> petList;
     private String[] stringPetList;
 
@@ -58,7 +59,7 @@ public class PetListActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //chama activity para cadastrar um novo pet
                 Intent intent = new Intent(getApplicationContext(), CadastrarPetActivity.class);
                 startActivity(intent);
             }
@@ -92,19 +93,23 @@ public class PetListActivity extends AppCompatActivity {
                 }
 
 
-                /*converte stringPetList ArrayList<Pet> em String[]*/
+                /*converte ArrayList<Pet> em String[] para serem utilizados em Myadapter*/
                 stringPetList = new String[petList.size()];
+                String[] tituloTeste = new String[petList.size()];
+                String[] descricaoTeste = new String[petList.size()];
+                String[] imageTeste = new String[petList.size()];
                 for (int i = 0; i < petList.size(); i++) {
                     stringPetList[i] = petList.get(i).toString();
-                    Log.d("PET ATUAIS", "\n\n pet atuais: " + petList.get(i));
+                    tituloTeste[i] = petList.get(i).toString();
+                    descricaoTeste[i] = petList.get(i).toString();
+                    imageTeste[i] = petList.get(i).getIdFoto();
 
+
+                    Log.d("PET ATUAIS", "\n\n pet atuais: " + petList.get(i));
                 }
 
-
-                MyAdapter myAdapter = new MyAdapter(getApplicationContext(),imageTeste,tituloTeste, descricaoTeste);
-
                 /*Cria uma simples listview para ser exibida*/
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, stringPetList);
+                MyAdapter myAdapter = new MyAdapter(getApplicationContext(), imageTeste, tituloTeste, descricaoTeste);
                 ListView listView = findViewById(R.id.listView_pet_list);
                 listView.setAdapter(myAdapter);
             }
@@ -116,26 +121,43 @@ public class PetListActivity extends AppCompatActivity {
         });
 
     }
+
+    /**
+     * recupera imagem do firebase
+     */
+    private void findPetViewsOnFirebase() {
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+        StorageReference imagensRef = storageRef.child("imagens");
+        StorageReference fotoRef = imagensRef.child("3b89a0e1-a961-4e1e-ac88-b2a15992d9f4.jpeg");
+
+        ImageView imgTeste = findViewById(R.id.img_foto_pet_list);
+        Context context = getApplicationContext();
+        Glide.with(context)
+                .using(new FirebaseImageLoader())
+                .load(fotoRef)
+                .into(imgTeste);
+    }
 }
+
 //TODO DEVO IMPLEMENTAR ISSO EPOIS
 class MyAdapter extends BaseAdapter {
 
-    int[] image;
+    String[] imageId;
     String[] titulo;
     String[] descricao;
     Context context;
 
-    public MyAdapter(Context context, int[] image, String[] titulo, String[] descricao) {
-        this.titulo = titulo;
-        this.image = image;
-        this.descricao = descricao;
-        this.context = context;
+    public MyAdapter(Context applicationContext, String[] imageTeste, String[] tituloTeste, String[] descricaoTeste) {
+        this.imageId = imageTeste;
+        this.titulo = tituloTeste;
+        this.descricao = descricaoTeste;
+        this.context = applicationContext;
     }
 
     @Override
     public int getCount() {
         return titulo.length;
-    }
+    }//recupera a quantidade de animais na lista
 
     @Override
     public Object getItem(int position) {
@@ -148,18 +170,54 @@ class MyAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View row = inflater.inflate(R.layout.customlistview, parent, false);
 
         ImageView img = row.findViewById(R.id.img_foto_pet_list);
         TextView textName = row.findViewById(R.id.text_nome_pet_list);
         TextView textDetalhe = row.findViewById(R.id.text_detalhes_pet_list);
 
-        img.setImageResource(image[position]);
-        textName.setText(titulo[position]);
-        textDetalhe.setText(descricao[position]);
-        return row;
+        /*referenia a imagem que sera recuperada do firebase*/
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+        StorageReference imagensRef = storageRef.child("imagens");
+        StorageReference fotoRef;
 
+        //caso não haja nenhuma foto de um pet cadastrado ele executara o catch
+        try {
+            fotoRef = imagensRef.child(imageId[position]);
+        } catch (Exception e) {
+            fotoRef = imagensRef.child("3b89a0e1-a961-4e1e-ac88-b2a15992d9f4.jpeg");
+        }
+
+        //recupera a imagem do firebase e seta ela em um image view
+        Glide.with(context)
+                .using(new FirebaseImageLoader())
+                .load(fotoRef)
+                .asBitmap().into(img);
+
+        textName.setText(titulo[position]);//seta cada textName com base em cada nome recuperado do firebase
+        textDetalhe.setText(descricao[position]);// seta cada textDetalhe com base em cada descricao recuperada
+
+        //ao clicar em um item do listView o evento é tratado aqui...
+        row.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "item clicado: " + titulo[position], Toast.LENGTH_LONG).show();//estou usando apenas para debug
+                Intent intent = new Intent(context, PetDetailActivity.class);
+
+                Bundle bundle = new Bundle();
+                intent.putExtra("nome", titulo[position]);
+                intent.putExtra("descricao", descricao[position]);
+                intent.putExtra("imagem", imageId[position]);
+
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);//sem essa linha de código naõ estava seno chamado o outra activity
+
+                context.startActivity(intent);
+                return;
+            }
+        });
+
+        return row;
     }
 }

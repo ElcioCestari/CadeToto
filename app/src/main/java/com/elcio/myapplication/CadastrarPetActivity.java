@@ -59,12 +59,10 @@ public class CadastrarPetActivity extends AppCompatActivity {
     ImageView imgViewFoto;//Foto que será salva
     ImageView imgViewFotoAtual;//Imagem que aparece no layout
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_pet);
-
 
         //solicitando permissão para acessar a galeria
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
@@ -123,6 +121,9 @@ public class CadastrarPetActivity extends AppCompatActivity {
                         /*Criando  o objeto pet que será salvo no banco*/
                         Pet pet = new Pet(UUID.randomUUID().toString(), name, dono.getIdUser().toString());
 
+                        //todo ESTOU SALVANDO UMA FOTO COM O MESMO ID DO PET..... TEMPORARIO.
+                        pet.setIdFoto(pet.getIdPet());
+
                         refPet.child(pet.getIdPet()).setValue(pet);//salvando um pet no firebase
 
                         //String value = dataSnapshot.getKey().toString();
@@ -148,6 +149,8 @@ public class CadastrarPetActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        //pede permissão para usuário para acessar os arquivos
+        //caso ele conceda acessa as fotos..
         if(resultCode == RESULT_OK){
             Uri selectedImage = data.getData();
             String[] filePath = {MediaStore.Images.Media.DATA};
@@ -184,7 +187,7 @@ public class CadastrarPetActivity extends AppCompatActivity {
         byte[] dadosImage = baos.toByteArray();
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();//pega a referencia do FirebaseStorage
         StorageReference imagensReference = storageReference.child("imagens");//cria uma pasta chamada "imagens"
-        StorageReference imageReference = imagensReference.child(idPet + ".jpeg");//salva uma imagem cujo caminho é o id Pet
+        StorageReference imageReference = imagensReference.child(idPet);//salva uma imagem cujo caminho é o id Pet
 
         //TODO: caso queira tratar eventos deve ser feito implementando os metodos do uploadTask
         UploadTask uploadTask = imageReference.putBytes(dadosImage);
