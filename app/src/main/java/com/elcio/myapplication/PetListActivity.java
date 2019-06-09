@@ -35,7 +35,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 
 public class PetListActivity extends AppCompatActivity {
-    private ArrayList<Pet> petList;
+    protected static ArrayList<Pet> petList;
     private String[] stringPetList;
 
     @Override
@@ -72,9 +72,10 @@ public class PetListActivity extends AppCompatActivity {
      * percorrer todas as instancias e adicioná-los na variavel petlist.
      */
     private void getPetsFromFirebase() {
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference reference = firebaseDatabase.getReference("animal");
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();//peganddo referencia do firebase
+        DatabaseReference reference = firebaseDatabase.getReference("animal");//pegando referencia do nó animal
 
+        //utilizado para recuperar os dados em animal
         reference.addValueEventListener(new ValueEventListener() {
 
             /**
@@ -108,7 +109,7 @@ public class PetListActivity extends AppCompatActivity {
                     Log.d("PET ATUAIS", "\n\n pet atuais: " + petList.get(i));
                 }
 
-                /*Cria uma simples listview para ser exibida*/
+                /*Cria uma listview para ser exibida*/
                 MyAdapter myAdapter = new MyAdapter(getApplicationContext(), imageTeste, tituloTeste, descricaoTeste);
                 ListView listView = findViewById(R.id.listView_pet_list);
                 listView.setAdapter(myAdapter);
@@ -137,9 +138,13 @@ public class PetListActivity extends AppCompatActivity {
                 .load(fotoRef)
                 .into(imgTeste);
     }
+
+    public ArrayList<Pet> getPetList() {
+        return petList;
+    }
 }
 
-//TODO DEVO IMPLEMENTAR ISSO EPOIS
+
 class MyAdapter extends BaseAdapter {
 
     String[] imageId;
@@ -174,6 +179,7 @@ class MyAdapter extends BaseAdapter {
         final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View row = inflater.inflate(R.layout.customlistview, parent, false);
 
+        //recuperando a referencia das views
         ImageView img = row.findViewById(R.id.img_foto_pet_list);
         TextView textName = row.findViewById(R.id.text_nome_pet_list);
         TextView textDetalhe = row.findViewById(R.id.text_detalhes_pet_list);
@@ -203,13 +209,15 @@ class MyAdapter extends BaseAdapter {
         row.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "item clicado: " + titulo[position], Toast.LENGTH_LONG).show();//estou usando apenas para debug
+                //Um Toast com uma mensagem para melhorar a usabilidade
+                Toast.makeText(context, "Caso tenha visto esse bichinho mostre no mapa!", Toast.LENGTH_LONG).show();//estou usando apenas para debug
                 Intent intent = new Intent(context, PetDetailActivity.class);
 
                 Bundle bundle = new Bundle();
                 intent.putExtra("nome", titulo[position]);
                 intent.putExtra("descricao", descricao[position]);
                 intent.putExtra("imagem", imageId[position]);
+                intent.putExtra("petId", PetListActivity.petList.get(position).getIdPet());
 
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);//sem essa linha de código naõ estava seno chamado o outra activity
 
